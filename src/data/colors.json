@@ -1,0 +1,272 @@
+[
+  {
+    "Team": "ATL",
+    "NBA_Abbr": "ATL",
+    "Primary": "#e03a3e",
+    "Secondary": "#26282a",
+    "Full": "Atlanta Hawks",
+    "TEAM_ABBREVIATION": "ATL",
+    "TEAM_ID": 1610612737
+  },
+  {
+    "Team": "BOS",
+    "NBA_Abbr": "BOS",
+    "Primary": "#00a55c",
+    "Secondary": "#bb9753",
+    "Full": "Boston Celtics",
+    "TEAM_ABBREVIATION": "BOS",
+    "TEAM_ID": 1610612738
+  },
+  {
+    "Team": "BRK",
+    "NBA_Abbr": "BKN",
+    "Primary": "#000000",
+    "Secondary": "#FFFFFF",
+    "Full": "Brooklyn Nets",
+    "TEAM_ABBREVIATION": "BKN",
+    "TEAM_ID": 1610612751
+  },
+  {
+    "Team": "CHO",
+    "NBA_Abbr": "CHA",
+    "Primary": "#1d1160",
+    "Secondary": "#00788c",
+    "Full": "Charlotte Hornets",
+    "TEAM_ABBREVIATION": "CHA",
+    "TEAM_ID": 1610612766
+  },
+  {
+    "Team": "CHI",
+    "NBA_Abbr": "CHI",
+    "Primary": "#ce1141",
+    "Secondary": "#000000",
+    "Full": "Chicago Bulls",
+    "TEAM_ABBREVIATION": "CHI",
+    "TEAM_ID": 1610612741
+  },
+  {
+    "Team": "CLE",
+    "NBA_Abbr": "CLE",
+    "Primary": "#6f2633",
+    "Secondary": "#FFB81C",
+    "Full": "Cleveland Cavaliers",
+    "TEAM_ABBREVIATION": "CLE",
+    "TEAM_ID": 1610612739
+  },
+  {
+    "Team": "DAL",
+    "NBA_Abbr": "DAL",
+    "Primary": "#007dc5",
+    "Secondary": "#00285e",
+    "Full": "Dallas Mavericks",
+    "TEAM_ABBREVIATION": "DAL",
+    "TEAM_ID": 1610612742
+  },
+  {
+    "Team": "DEN",
+    "NBA_Abbr": "DEN",
+    "Primary": "#0d2240",
+    "Secondary": "#ffc627",
+    "Full": "Denver Nuggets",
+    "TEAM_ABBREVIATION": "DEN",
+    "TEAM_ID": 1610612743
+  },
+  {
+    "Team": "DET",
+    "NBA_Abbr": "DET",
+    "Primary": "#C8102E",
+    "Secondary": "#1d428a",
+    "Full": "Detroit Pistons",
+    "TEAM_ABBREVIATION": "DET",
+    "TEAM_ID": 1610612765
+  },
+  {
+    "Team": "GSW",
+    "NBA_Abbr": "GSW",
+    "Primary": "#006bb6",
+    "Secondary": "#fdb927",
+    "Full": "Golden State Warriors",
+    "TEAM_ABBREVIATION": "GSW",
+    "TEAM_ID": 1610612744
+  },
+  {
+    "Team": "HOU",
+    "NBA_Abbr": "HOU",
+    "Primary": "#ce1141",
+    "Secondary": "#000000",
+    "Full": "Houston Rockets",
+    "TEAM_ABBREVIATION": "HOU",
+    "TEAM_ID": 1610612745
+  },
+  {
+    "Team": "IND",
+    "NBA_Abbr": "IND",
+    "Primary": "#002d62",
+    "Secondary": "#fdbb30",
+    "Full": "Indiana Pacers",
+    "TEAM_ABBREVIATION": "IND",
+    "TEAM_ID": 1610612754
+  },
+  {
+    "Team": "LAC",
+    "NBA_Abbr": "LAC",
+    "Primary": "#1d428a",
+    "Secondary": "#c8102e",
+    "Full": "LA Clippers",
+    "TEAM_ABBREVIATION": "LAC",
+    "TEAM_ID": 1610612746
+  },
+  {
+    "Team": "LAL",
+    "NBA_Abbr": "LAL",
+    "Primary": "#fdb927",
+    "Secondary": "#552583",
+    "Full": "Los Angeles Lakers",
+    "TEAM_ABBREVIATION": "LAL",
+    "TEAM_ID": 1610612747
+  },
+  {
+    "Team": "MEM",
+    "NBA_Abbr": "MEM",
+    "Primary": "#12173f",
+    "Secondary": "#5d76a9",
+    "Full": "Memphis Grizzlies",
+    "TEAM_ABBREVIATION": "MEM",
+    "TEAM_ID": 1610612763
+  },
+  {
+    "Team": "MIA",
+    "NBA_Abbr": "MIA",
+    "Primary": "#98002e",
+    "Secondary": "#000000",
+    "Full": "Miami Heat",
+    "TEAM_ABBREVIATION": "MIA",
+    "TEAM_ID": 1610612748
+  },
+  {
+    "Team": "MIL",
+    "NBA_Abbr": "MIL",
+    "Primary": "#00471b",
+    "Secondary": "#000000",
+    "Full": "Milwaukee Bucks",
+    "TEAM_ABBREVIATION": "MIL",
+    "TEAM_ID": 1610612749
+  },
+  {
+    "Team": "MIN",
+    "NBA_Abbr": "MIN",
+    "Primary": "#0c2340",
+    "Secondary": "#9ea2a2",
+    "Full": "Minnesota Timberwolves",
+    "TEAM_ABBREVIATION": "MIN",
+    "TEAM_ID": 1610612750
+  },
+  {
+    "Team": "NOP",
+    "NBA_Abbr": "NOP",
+    "Primary": "#002b5c",
+    "Secondary": "#b4975a",
+    "Full": "New Orleans Pelicans",
+    "TEAM_ABBREVIATION": "NOP",
+    "TEAM_ID": 1610612740
+  },
+  {
+    "Team": "NYK",
+    "NBA_Abbr": "NYK",
+    "Primary": "#006bb6",
+    "Secondary": "#f58426",
+    "Full": "New York Knicks",
+    "TEAM_ABBREVIATION": "NYK",
+    "TEAM_ID": 1610612752
+  },
+  {
+    "Team": "OKC",
+    "NBA_Abbr": "OKC",
+    "Primary": "#007ac1",
+    "Secondary": "#fdbb30",
+    "Full": "Oklahoma City Thunder",
+    "TEAM_ABBREVIATION": "OKC",
+    "TEAM_ID": 1610612760
+  },
+  {
+    "Team": "ORL",
+    "NBA_Abbr": "ORL",
+    "Primary": "#0b77bd",
+    "Secondary": "#000000",
+    "Full": "Orlando Magic",
+    "TEAM_ABBREVIATION": "ORL",
+    "TEAM_ID": 1610612753
+  },
+  {
+    "Team": "PHI",
+    "NBA_Abbr": "PHI",
+    "Primary": "#006bb6",
+    "Secondary": "#ed174c",
+    "Full": "Philadelphia 76ers",
+    "TEAM_ABBREVIATION": "PHI",
+    "TEAM_ID": 1610612755
+  },
+  {
+    "Team": "PHO",
+    "NBA_Abbr": "PHX",
+    "Primary": "#1d1160",
+    "Secondary": "#e56020",
+    "Full": "Phoenix Suns",
+    "TEAM_ABBREVIATION": "PHX",
+    "TEAM_ID": 1610612756
+  },
+  {
+    "Team": "POR",
+    "NBA_Abbr": "POR",
+    "Primary": "#e03a3e",
+    "Secondary": "#000000",
+    "Full": "Portland Trail Blazers",
+    "TEAM_ABBREVIATION": "POR",
+    "TEAM_ID": 1610612757
+  },
+  {
+    "Team": "SAC",
+    "NBA_Abbr": "SAC",
+    "Primary": "#5b2b82",
+    "Secondary": "#63727a",
+    "Full": "Sacramento Kings",
+    "TEAM_ABBREVIATION": "SAC",
+    "TEAM_ID": 1610612758
+  },
+  {
+    "Team": "SAS",
+    "NBA_Abbr": "SAS",
+    "Primary": "#c4ced4",
+    "Secondary": "#000000",
+    "Full": "San Antonio Spurs",
+    "TEAM_ABBREVIATION": "SAS",
+    "TEAM_ID": 1610612759
+  },
+  {
+    "Team": "TOR",
+    "NBA_Abbr": "TOR",
+    "Primary": "#cd1141",
+    "Secondary": "#000000",
+    "Full": "Toronto Raptors",
+    "TEAM_ABBREVIATION": "TOR",
+    "TEAM_ID": 1610612761
+  },
+  {
+    "Team": "UTA",
+    "NBA_Abbr": "UTA",
+    "Primary": "#0d2240",
+    "Secondary": "#f9a01b",
+    "Full": "Utah Jazz",
+    "TEAM_ABBREVIATION": "UTA",
+    "TEAM_ID": 1610612762
+  },
+  {
+    "Team": "WAS",
+    "NBA_Abbr": "WAS",
+    "Primary": "#002b5c",
+    "Secondary": "#E31837",
+    "Full": "Washington Wizards",
+    "TEAM_ABBREVIATION": "WAS",
+    "TEAM_ID": 1610612764
+  }
+]

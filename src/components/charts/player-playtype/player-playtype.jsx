@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import uniqBy from 'lodash/uniqBy';
-import sortBy from 'lodash/sortBy';
+
 import {
   CartesianGrid,
   ResponsiveContainer,
@@ -10,80 +8,97 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  LabelList,
 } from 'recharts';
+import styled from 'styled-components';
 
 import playerPlaytypeData from '../../../data/P-playtypes.json';
+import colors from '../../../data/colors.json';
 import PlayerPlaytypeTooltip from './player-playtype-tooltip';
+import PlayerSelector from './player-selector';
+import { Button } from 'react-bootstrap';
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
+const SelectionWrapper = styled.div`
+
+`;
+
+const ChartWrapper = styled.div`
+  flex-grow: 1;
+`;
 
 const PlayerPlaytypeChart = () => {
-  const seasons = useMemo(
-    () => uniqBy(playerPlaytypeData, d => d.season).map(d => d.season),
-    [],
-  );
-  const [selectedSeason, setSelectedSeason] = useState(2021);
-  const teams = useMemo(
-    () =>
-      sortBy(
-        uniqBy(
-          playerPlaytypeData
-            .filter(d => d.season === selectedSeason)
-            .map(d => ({ id: d.TEAM_ID, name: d.TEAM_NAME })),
-          d => d.id
-        ),
-        d => d.name
-      ),
-    [selectedSeason],
-  );
-  const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
-  const players = useMemo(
-    () =>
-      sortBy(
-        uniqBy(
-          playerPlaytypeData
-            .filter(
-              p => p.TEAM_ID === selectedTeam && p.season === selectedSeason
-            )
-            .map(d => ({ id: d.PLAYER_ID, name: d.PLAYER_NAME })),
-          p => p.id,
-        ),
-        p => p.name,
-      ),
-    [selectedTeam, selectedSeason],
-  );
-  const [selectedPlayer, setSelectedPlayer] = useState(players[0].id);
+  const [selectedPlayer, setSelectedPlayer] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState([2021]);
+  const [selectedTeam, setSelectedTeam] = useState([]);
   const selectedPlayerData = useMemo(
     () => playerPlaytypeData.filter(
       p => p.season === selectedSeason && p.TEAM_ID === selectedTeam && p.PLAYER_ID === selectedPlayer
     ),
     [selectedSeason, selectedTeam, selectedPlayer]
   );
+  const selectedColors = useMemo(
+    () => colors.find(c => c.TEAM_ID === selectedTeam),
+    [selectedTeam]
+  );
 
-  const onChangeSeason = e => setSelectedSeason(parseInt(e.target.value));
-
-  const onChangeTeam = e => setSelectedTeam(parseInt(e.target.value));
-
-  const onChangePlayer = e => setSelectedPlayer(parseInt(e.target.value));
-
-  return (<div>
-    <Form.Control as="select" onChange={onChangeSeason} value={selectedSeason}>
-      {seasons.map(s => <option value={s} key={s}>{s}</option>)}
-    </Form.Control>
-    <Form.Control as="select" onChange={onChangeTeam} value={selectedTeam}>
-      {teams.map(t => <option value={t.id} key={t.id}>{t.name}</option>)}
-    </Form.Control>
-    <Form.Control as="select" onChange={onChangePlayer} value={selectedPlayer} disabled={!selectedSeason || !selectedTeam}>
-      {players.map(p => <option value={p.id} key={p.id}>{p.name}</option>)}
-    </Form.Control>
-    {selectedPlayerData && <ResponsiveContainer height={500} width={500}>
-      <ScatterChart>
-        <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="POSS_PCT" />
-        <YAxis dataKey="PERCENTILE" />
-        <Scatter data={selectedPlayerData} />
-        <Tooltip content={<PlayerPlaytypeTooltip />} />
-      </ScatterChart>
-    </ResponsiveContainer>}
-  </div>);
+  return (
+    <Wrapper>
+      <SelectionWrapper>
+        <PlayerSelector
+          playerPlaytypeData={playerPlaytypeData}
+          selectedPlayer={selectedPlayer}
+          setSelectedPlayer={setSelectedPlayer}
+          selectedTeam={selectedTeam}
+          setSelectedTeam={setSelectedTeam}
+          selectedSeason={selectedSeason}
+          setSelectedSeason={setSelectedSeason}
+        />
+      </SelectionWrapper>
+      <ChartWrapper>
+        {selectedPlayerData &&
+          <ResponsiveContainer minHeight={500}>
+            <ScatterChart
+              data={selectedPlayerData}
+              margin={{ top: 5, right: 30, left: 50, bottom: 15 }}
+            >
+              <CartesianGrid stroke="#f5f5f5" />
+              <Scatter
+                data={selectedPlayerData}
+                fill={selectedColors?.Primary || '#17408B'}
+              >
+                <LabelList dataKey="playtype_clean" position="right" />
+              </Scatter>
+              <XAxis
+                type="number"
+                dataKey="POSS_PCT"
+                domain={[0, 1]}
+                label={{
+                  value: "Frequency",
+                  position: "center",
+                  dy: 10,
+                }}
+              />
+              <YAxis
+                dataKey="PERCENTILE"
+                type="number"
+                domain={[0, 1]}
+                label={{
+                  value: "Efficiency",
+                  position: "insideLeft",
+                  offset: -50,
+                }}
+              />
+              <Tooltip content={<PlayerPlaytypeTooltip />} />
+            </ScatterChart>
+          </ResponsiveContainer>}
+      </ChartWrapper>
+    </Wrapper>
+  );
 };
 
 export default PlayerPlaytypeChart;

@@ -6,8 +6,16 @@ import PlayerPlaytypeChart from '../charts/player-playtype/player-playtype';
 import TeamPlaytypeChart from '../charts/team-playtype/team-playtype';
 
 const AppWrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   width: 100%;
+
+  .tab-content {
+    height: calc(100% - 42px);
+  }
+
+  .tab-pane {
+    height: 100%;
+  }
 `;
 
 const CHARTS = [
