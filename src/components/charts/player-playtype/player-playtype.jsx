@@ -2,10 +2,18 @@ import React, { useMemo, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import {
+  CartesianGrid,
+  ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
 
 import playerPlaytypeData from '../../../data/P-playtypes.json';
-import { CartesianGrid, ResponsiveContainer, ScatterChart, XAxis, YAxis } from 'recharts';
-import { Tooltip } from 'bootstrap';
+import PlayerPlaytypeTooltip from './player-playtype-tooltip';
 
 const PlayerPlaytypeChart = () => {
   const seasons = useMemo(
@@ -49,7 +57,6 @@ const PlayerPlaytypeChart = () => {
     ),
     [selectedSeason, selectedTeam, selectedPlayer]
   );
-  console.log(selectedPlayerData);
 
   const onChangeSeason = e => setSelectedSeason(parseInt(e.target.value));
 
@@ -68,11 +75,12 @@ const PlayerPlaytypeChart = () => {
       {players.map(p => <option value={p.id} key={p.id}>{p.name}</option>)}
     </Form.Control>
     {selectedPlayerData && <ResponsiveContainer height={500} width={500}>
-      <ScatterChart data={selectedPlayerData}>
-        <CartesianGrid />
+      <ScatterChart>
+        <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="POSS_PCT" />
         <YAxis dataKey="PERCENTILE" />
-        <Tooltip />
+        <Scatter data={selectedPlayerData} />
+        <Tooltip content={<PlayerPlaytypeTooltip />} />
       </ScatterChart>
     </ResponsiveContainer>}
   </div>);
