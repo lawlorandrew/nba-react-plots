@@ -4,10 +4,11 @@ import Tab from 'react-bootstrap/Tab'
 import styled from 'styled-components';
 import PlayerPlaytypeChart from '../charts/player-playtype/player-playtype';
 import TeamPlaytypeChart from '../charts/team-playtype/team-playtype';
+import LeagueLeaders from '../charts/league-leaders/league-leaders';
 
 const AppWrapper = styled.div`
   height: 100vh;
-  width: 100%;
+  width: 100vw;
 
   .tab-content {
     height: calc(100% - 42px);
@@ -23,6 +24,11 @@ const CHARTS = [
     key: 'PLAYER_PLAYTYPE',
     title: 'Player Playtype',
     component: PlayerPlaytypeChart,
+  },
+  {
+    key: 'LEAGUE_LEADERS',
+    title: 'Playtype League Leaders',
+    component: LeagueLeaders,
   },
   {
     key: 'TEAM_PLAYTYPE',

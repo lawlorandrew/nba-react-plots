@@ -2,11 +2,15 @@ import React, { useMemo, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import { SelectionWrapper } from '../../../shared/styled-components';
+import { Button } from 'react-bootstrap';
 
 const PlayerSelector = ({
   playerPlaytypeData,
   selectedPlayerFilter,
   setSelectedPlayerFilter,
+  onRemovePlayer,
+  canRemove,
 }) => {
   const seasons = useMemo(
     () => uniqBy(playerPlaytypeData, d => d.season).map(d => d.season),
@@ -57,8 +61,9 @@ const PlayerSelector = ({
   const onChangeTeam = e => setSelectedPlayerFilter({ ...selectedPlayerFilter, team: parseInt(e.target.value) });
 
   const onChangePlayer = e => setSelectedPlayerFilter({ ...selectedPlayerFilter, player: parseInt(e.target.value) });
+
   return (
-    <>
+    <SelectionWrapper>
       <Form.Control as="select" onChange={onChangeSeason} value={selectedPlayerFilter.season}>
         {seasons.map(s => <option value={s} key={s}>{s}</option>)}
       </Form.Control>
@@ -68,7 +73,8 @@ const PlayerSelector = ({
       <Form.Control as="select" onChange={onChangePlayer} value={selectedPlayerFilter.player} disabled={!selectedPlayerFilter.season || !selectedPlayerFilter.team}>
         {players.map(p => <option value={p.id} key={p.id}>{p.name}</option>)}
       </Form.Control>
-    </>
+      <Button variant="danger" onClick={onRemovePlayer} disabled={!canRemove}>Remove</Button>
+    </SelectionWrapper>
   )
 };
 
