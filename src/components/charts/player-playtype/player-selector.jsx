@@ -5,12 +5,8 @@ import sortBy from 'lodash/sortBy';
 
 const PlayerSelector = ({
   playerPlaytypeData,
-  selectedPlayer,
-  setSelectedPlayer,
-  selectedTeam,
-  setSelectedTeam,
-  selectedSeason,
-  setSelectedSeason,
+  selectedPlayerFilter,
+  setSelectedPlayerFilter,
 }) => {
   const seasons = useMemo(
     () => uniqBy(playerPlaytypeData, d => d.season).map(d => d.season),
@@ -21,13 +17,13 @@ const PlayerSelector = ({
       sortBy(
         uniqBy(
           playerPlaytypeData
-            .filter(d => d.season === selectedSeason)
+            .filter(d => d.season === selectedPlayerFilter.season)
             .map(d => ({ id: d.TEAM_ID, name: d.TEAM_NAME })),
           d => d.id
         ),
         d => d.name
       ),
-    [selectedSeason, playerPlaytypeData],
+    [selectedPlayerFilter.season, playerPlaytypeData],
   );
   const players = useMemo(
     () =>
@@ -35,41 +31,41 @@ const PlayerSelector = ({
         uniqBy(
           playerPlaytypeData
             .filter(
-              p => p.TEAM_ID === selectedTeam && p.season === selectedSeason
+              p => p.TEAM_ID === selectedPlayerFilter.team && p.season === selectedPlayerFilter.season
             )
             .map(d => ({ id: d.PLAYER_ID, name: d.PLAYER_NAME })),
           p => p.id,
         ),
         p => p.name,
       ),
-    [selectedTeam, selectedSeason, playerPlaytypeData],
+    [selectedPlayerFilter.team, selectedPlayerFilter.season, playerPlaytypeData],
   );
   useEffect(() => {
-    if (!selectedTeam || !teams.find(t => t.id === selectedTeam)) {
-      setSelectedTeam(teams[0].id);
+    if (!selectedPlayerFilter.team || !teams.find(t => t.id === selectedPlayerFilter.team)) {
+      setSelectedPlayerFilter({ ...selectedPlayerFilter, team: teams[0].id });
     }
-  }, [teams, setSelectedTeam, selectedTeam]);
+  }, [teams, setSelectedPlayerFilter, selectedPlayerFilter]);
 
   useEffect(() => {
-    if (players.length && (!selectedPlayer || !players.find(p => p.id === selectedPlayer))) {
-      setSelectedPlayer(players[0].id);
+    if (players.length && (!selectedPlayerFilter.player || !players.find(p => p.id === selectedPlayerFilter.player ))) {
+      setSelectedPlayerFilter({ ...selectedPlayerFilter, player: players[0].id });
     }
-  }, [players, setSelectedPlayer, selectedPlayer]);
+  }, [players, setSelectedPlayerFilter, selectedPlayerFilter]);
 
-  const onChangeSeason = e => setSelectedSeason(parseInt(e.target.value));
+  const onChangeSeason = e => setSelectedPlayerFilter({ ...selectedPlayerFilter, season: parseInt(e.target.value) });
 
-  const onChangeTeam = e => setSelectedTeam(parseInt(e.target.value));
+  const onChangeTeam = e => setSelectedPlayerFilter({ ...selectedPlayerFilter, team: parseInt(e.target.value) });
 
-  const onChangePlayer = e => setSelectedPlayer(parseInt(e.target.value));
+  const onChangePlayer = e => setSelectedPlayerFilter({ ...selectedPlayerFilter, player: parseInt(e.target.value) });
   return (
     <>
-      <Form.Control as="select" onChange={onChangeSeason} value={selectedSeason}>
+      <Form.Control as="select" onChange={onChangeSeason} value={selectedPlayerFilter.season}>
         {seasons.map(s => <option value={s} key={s}>{s}</option>)}
       </Form.Control>
-      <Form.Control as="select" onChange={onChangeTeam} value={selectedTeam}>
+      <Form.Control as="select" onChange={onChangeTeam} value={selectedPlayerFilter.team}>
         {teams.map(t => <option value={t.id} key={t.id}>{t.name}</option>)}
       </Form.Control>
-      <Form.Control as="select" onChange={onChangePlayer} value={selectedPlayer} disabled={!selectedSeason || !selectedTeam}>
+      <Form.Control as="select" onChange={onChangePlayer} value={selectedPlayerFilter.player} disabled={!selectedPlayerFilter.season || !selectedPlayerFilter.team}>
         {players.map(p => <option value={p.id} key={p.id}>{p.name}</option>)}
       </Form.Control>
     </>

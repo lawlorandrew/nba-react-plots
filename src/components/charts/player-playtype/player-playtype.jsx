@@ -31,69 +31,83 @@ const ChartWrapper = styled.div`
   flex-grow: 1;
 `;
 
+const blankPlayer = { player: undefined, season: 2021, team: undefined };
 const PlayerPlaytypeChart = () => {
-  const [selectedPlayer, setSelectedPlayer] = useState([]);
-  const [selectedSeason, setSelectedSeason] = useState([2021]);
-  const [selectedTeam, setSelectedTeam] = useState([]);
+  const [selectedPlayerFilters, setSelectedPlayerFilters] = useState([{ ...blankPlayer }]);
   const selectedPlayerData = useMemo(
-    () => playerPlaytypeData.filter(
-      p => p.season === selectedSeason && p.TEAM_ID === selectedTeam && p.PLAYER_ID === selectedPlayer
+    () => selectedPlayerFilters.map(
+      (selectedPlayerFilter) => ({
+        data: playerPlaytypeData.filter(
+          p => p.season === selectedPlayerFilter.season && p.TEAM_ID === selectedPlayerFilter.team && p.PLAYER_ID === selectedPlayerFilter.player
+        ),
+        colors: colors.find(c => c.TEAM_ID === selectedPlayerFilter.team),
+      })
     ),
-    [selectedSeason, selectedTeam, selectedPlayer]
+    [selectedPlayerFilters]
   );
-  const selectedColors = useMemo(
-    () => colors.find(c => c.TEAM_ID === selectedTeam),
-    [selectedTeam]
-  );
+
+  const onAddPlayer = () => setSelectedPlayerFilters([...selectedPlayerFilters, {...blankPlayer}])
 
   return (
     <Wrapper>
       <SelectionWrapper>
-        <PlayerSelector
+        {selectedPlayerFilters.map((spf, index) => <PlayerSelector
+          key={index}
           playerPlaytypeData={playerPlaytypeData}
-          selectedPlayer={selectedPlayer}
-          setSelectedPlayer={setSelectedPlayer}
-          selectedTeam={selectedTeam}
-          setSelectedTeam={setSelectedTeam}
-          selectedSeason={selectedSeason}
-          setSelectedSeason={setSelectedSeason}
-        />
+          selectedPlayerFilter={spf}
+          setSelectedPlayerFilter={
+            (val) =>
+              setSelectedPlayerFilters(selectedPlayerFilters.map((innerSpf, i) => {
+                if (index === i) {
+                  return val;
+                }
+                return innerSpf;
+              }))
+          }
+        />)}
+        <Button onClick={onAddPlayer}>Add Player</Button>
       </SelectionWrapper>
       <ChartWrapper>
         {selectedPlayerData &&
           <ResponsiveContainer minHeight={500}>
             <ScatterChart
-              data={selectedPlayerData}
               margin={{ top: 5, right: 30, left: 50, bottom: 15 }}
             >
               <CartesianGrid stroke="#f5f5f5" />
-              <Scatter
-                data={selectedPlayerData}
-                fill={selectedColors?.Primary || '#17408B'}
+              {selectedPlayerData.map((datum, i) => <Scatter
+                key={i}
+                data={datum.data}
+                fill={datum.colors?.Primary || '#17408B'}
               >
-                <LabelList dataKey="playtype_clean" position="right" />
-              </Scatter>
-              <XAxis
-                type="number"
-                dataKey="POSS_PCT"
-                domain={[0, 1]}
-                label={{
-                  value: "Frequency",
-                  position: "center",
-                  dy: 10,
-                }}
-              />
-              <YAxis
-                dataKey="PERCENTILE"
-                type="number"
-                domain={[0, 1]}
-                label={{
-                  value: "Efficiency",
-                  position: "insideLeft",
-                  offset: -50,
-                }}
-              />
-              <Tooltip content={<PlayerPlaytypeTooltip />} />
+                <LabelList
+                  position="right"
+                  valueAccessor={(val) => {
+                    console.log(val)
+                    return selectedPlayerFilters.length > 1 ? `${val.PLAYER_NAME}, ${val.TEAM_ABBR} - ${val.season} ${val.playtype_clean}` : val.playtype_clean;
+                  }}
+                />
+              </Scatter>)}
+                <XAxis
+                  type="number"
+                  dataKey="POSS_PCT"
+                  domain={[0, 1]}
+                  label={{
+                    value: "Frequency",
+                    position: "center",
+                    dy: 10,
+                  }}
+                />
+                <YAxis
+                  dataKey="PERCENTILE"
+                  type="number"
+                  domain={[0, 1]}
+                  label={{
+                    value: "Efficiency",
+                    position: "insideLeft",
+                    offset: -50,
+                  }}
+                />
+                <Tooltip content={<PlayerPlaytypeTooltip />} />
             </ScatterChart>
           </ResponsiveContainer>}
       </ChartWrapper>

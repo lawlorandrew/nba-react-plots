@@ -8,7 +8,6 @@ const TooltipWrapper = styled.div`
 `;
 
 const PlayerPlaytypeTooltip = ({ payload, ...props }) => {
-  console.log(props);
   if (!payload.length) {
     return <div />
   }
