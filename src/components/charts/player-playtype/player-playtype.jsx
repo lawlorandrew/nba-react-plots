@@ -3,6 +3,7 @@ import playerPlaytypeData from '../../../data/P-playtypes.json';
 import colors from '../../../data/colors.json';
 import PlayerSelector from './player-selector';
 import { Button } from 'react-bootstrap';
+import uniqBy from 'lodash/uniqBy';
 import { PageWrapper, TableWrapper } from '../../../shared/styled-components';
 import Chart from './chart';
 import StatsTable from './stats-table';
@@ -25,46 +26,51 @@ const PlayerPlaytypeChart = () => {
     [selectedPlayerFilters]
   );
 
+  const tableData = useMemo(
+    () => selectedPlayerData.reduce((acc, cur) => [...acc, ...cur.data], []),
+    [selectedPlayerData],
+  );
+
+  const playtypes = uniqBy(playerPlaytypeData, p => p.playtype_clean).map(p => p.playtype_clean);
+
   const onAddPlayer = () => setSelectedPlayerFilters([...selectedPlayerFilters, { ...blankPlayer }])
 
   return (
     <PageWrapper>
       <div>
         {selectedPlayerFilters.map((spf, index) =>
-            <PlayerSelector
-              key={index}
-              canRemove={selectedPlayerFilters.length > 1}
-              playerPlaytypeData={playerPlaytypeData}
-              selectedPlayerFilter={spf}
-              setSelectedPlayerFilter={
-                (val) =>
-                  setSelectedPlayerFilters(selectedPlayerFilters.map((innerSpf, i) => {
-                    if (index === i) {
-                      return val;
-                    }
-                    return innerSpf;
-                  }))
-              }
-              onRemovePlayer={() => setSelectedPlayerFilters(
-                selectedPlayerFilters.filter(
-                  (_innerSpf, i) => {
-                    return index !== i;
+          <PlayerSelector
+            key={index}
+            canRemove={selectedPlayerFilters.length > 1}
+            playerPlaytypeData={playerPlaytypeData}
+            selectedPlayerFilter={spf}
+            setSelectedPlayerFilter={
+              (val) =>
+                setSelectedPlayerFilters(selectedPlayerFilters.map((innerSpf, i) => {
+                  if (index === i) {
+                    return val;
                   }
-                )
-              )}
-            />)}
+                  return innerSpf;
+                }))
+            }
+            onRemovePlayer={() => setSelectedPlayerFilters(
+              selectedPlayerFilters.filter(
+                (_innerSpf, i) => {
+                  return index !== i;
+                }
+              )
+            )}
+          />)}
         <Button onClick={onAddPlayer}>Add Player</Button>
       </div>
-        {selectedPlayerData &&
-          <>
-            <Chart
-              selectedPlayerData={selectedPlayerData}
-              selectedPlayerFilters={selectedPlayerFilters}
-            />
-          </>
-        }
+      {selectedPlayerData &&
+        <Chart
+          selectedPlayerData={selectedPlayerData}
+          selectedPlayerFilters={selectedPlayerFilters}
+        />
+      }
       <TableWrapper>
-        <StatsTable data={selectedPlayerData.reduce((acc, cur) => [...acc, ...cur.data], [])} columns={['PnR Handler', 'Spot-Up']} />
+        <StatsTable data={tableData} columns={playtypes} />
       </TableWrapper>
     </PageWrapper>
   );

@@ -14,7 +14,7 @@ import PlayerPlaytypeTooltip from './player-playtype-tooltip';
 
 
 const Chart = ({ selectedPlayerData, selectedPlayerFilters }) => (
-  <ResponsiveContainer minHeight={500}>
+  <ResponsiveContainer>
     <ScatterChart
       margin={{ top: 5, right: 30, left: 50, bottom: 15 }}
     >

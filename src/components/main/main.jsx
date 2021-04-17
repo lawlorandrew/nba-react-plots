@@ -41,7 +41,11 @@ const Main = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(CHARTS[0].key);
   return (
     <AppWrapper>
-      <Tabs activeKey={selectedTabIndex} onSelect={(key) => setSelectedTabIndex(key)}>
+      <Tabs
+        activeKey={selectedTabIndex}
+        onSelect={(key) => setSelectedTabIndex(key)}
+        transition={false}
+      >
         {CHARTS.map(c => <Tab eventKey={c.key} title={c.title} key={c.key}>
           {c.component()}
         </Tab>)}
