@@ -70,7 +70,11 @@ const PlayerPlaytypeChart = () => {
         />
       }
       <TableWrapper>
-        <StatsTable data={tableData} columns={playtypes} />
+        <StatsTable
+          data={tableData}
+          columns={playtypes}
+          shouldBold={true}
+        />
       </TableWrapper>
     </PageWrapper>
   );

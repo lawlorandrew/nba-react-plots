@@ -4,8 +4,7 @@ import { getPlayerInitials } from '../../../shared/utils';
 import PlayerPlaytypeTooltip from '../player-playtype/player-playtype-tooltip';
 import CustomDot from './custom-dot';
 
-const Chart = ({ data }) => {
-  console.log(data);
+const Chart = ({ data, highlightedData, shouldHighlight }) => {
   return (
     <ResponsiveContainer>
       <ScatterChart
@@ -14,13 +13,19 @@ const Chart = ({ data }) => {
         <CartesianGrid stroke="#f5f5f5" />
         <Scatter
           data={data}
+          shape={
+            <CustomDot
+              highlightedData={highlightedData}
+              shouldHighlight={shouldHighlight}
+            />
+          }
         >
-          <LabelList
+          {/* <LabelList
             position="right"
             valueAccessor={(val) => {
               return getPlayerInitials(val.PLAYER_NAME);
             }}
-          />
+          /> */}
         </Scatter>
         <XAxis
           type="number"

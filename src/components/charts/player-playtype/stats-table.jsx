@@ -44,7 +44,7 @@ const StyledTable = styled(Table)`
   }
 `;
 
-const StatsTable = ({ data, columns }) => {
+const StatsTable = ({ data, columns, shouldBold }) => {
   const rows = useMemo(
     () => uniqBy(data, d => d.key),
     [data],
@@ -90,10 +90,10 @@ const StatsTable = ({ data, columns }) => {
               const statRow = data.find(d => d.key === r.key && d.playtype_clean === c);
               return (
                 <React.Fragment key={c}>
-                  <StatCell isBold={rows.length > 1 && ((statRow?.POSS_PCT || 0) === maxima[c]?.POSS_PCT)}>{statRow?.POSS_PCT || 0}</StatCell>
-                  <StatCell isBold={rows.length > 1 && ((statRow?.POSS || 0) === maxima[c]?.POSS)}>{statRow?.POSS || 0}</StatCell>
-                  <StatCell isBold={rows.length > 1 && ((statRow?.PPP || 0) === maxima[c]?.PPP)}>{statRow?.PPP || 0}</StatCell>
-                  <StatCell isBold={rows.length > 1 && ((statRow?.PERCENTILE || 0) === maxima[c]?.PERCENTILE)}>{statRow?.PERCENTILE || 0}</StatCell>
+                  <StatCell isBold={shouldBold && rows.length > 1 && ((statRow?.POSS_PCT || 0) === maxima[c]?.POSS_PCT)}>{statRow?.POSS_PCT || 0}</StatCell>
+                  <StatCell isBold={shouldBold && rows.length > 1 && ((statRow?.POSS || 0) === maxima[c]?.POSS)}>{statRow?.POSS || 0}</StatCell>
+                  <StatCell isBold={shouldBold && rows.length > 1 && ((statRow?.PPP || 0) === maxima[c]?.PPP)}>{statRow?.PPP || 0}</StatCell>
+                  <StatCell isBold={shouldBold && rows.length > 1 && ((statRow?.PERCENTILE || 0) === maxima[c]?.PERCENTILE)}>{statRow?.PERCENTILE || 0}</StatCell>
                 </React.Fragment>
               );
             })}
