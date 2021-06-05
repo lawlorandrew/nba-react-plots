@@ -24,7 +24,7 @@ const CustomDot = (props) => {
       cy={props.cy}
       fill={props.Primary}
       r={5}
-      opacity={getOpacity}
+      opacity={getOpacity()}
     />
   );
 };

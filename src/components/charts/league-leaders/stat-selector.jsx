@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { SelectionWrapper } from '../../../shared/styled-components';
+import { FlexWrapper } from '../../../shared/styled-components';
 
 const StatSelector = ({
   onSelectStat,
@@ -15,18 +15,18 @@ const StatSelector = ({
   };
 
   const onChangeSeason = e => {
-    onSelectSeason(e.target.value);
+    onSelectSeason(parseInt(e.target.value));
   };
 
   return (
-    <SelectionWrapper>
+    <FlexWrapper>
       <Form.Control as="select" onChange={onChangeSeason} value={selectedSeason}>
-        {seasons.map(season => <option key={season} value={season}>{season}</option>)}
+        {seasons.map(season => <option key={season.key} value={season.key}>{season.label}</option>)}
       </Form.Control>
       <Form.Control as="select" onChange={onChangeStat} value={selectedStat}>
         {statOptions.map(playtype => <option key={playtype} value={playtype}>{playtype}</option>)}
       </Form.Control>
-    </SelectionWrapper>
+    </FlexWrapper>
   );
 };
 

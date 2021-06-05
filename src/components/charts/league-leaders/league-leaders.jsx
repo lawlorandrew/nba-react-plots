@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { PageWrapper } from '../../../shared/styled-components';
+import { ColumnPageWrapper } from '../../../shared/styled-components';
 import Chart from './chart';
 import StatSelector from './stat-selector';
 import playerPlaytypeData from '../../../data/P-playtypes.json';
@@ -13,7 +13,10 @@ import StatsTable from '../player-playtype/stats-table';
 
 const LeagueLeaders = () => {
   const statOptions = uniqBy(playerPlaytypeData, d => d.playtype_clean).map(d => d.playtype_clean);
-  const seasons = uniqBy(playerPlaytypeData, d => d.season).map(d => d.season);
+  const seasons = uniqBy(playerPlaytypeData, d => d.season).map(d => ({
+    key: d.season,
+    label: `${d.season - 1}-${d.season % 100}`,
+  }));
   const [selectedStat, setSelectedStat] = useState(statOptions[0]);
   const [selectedSeason, setSelectedSeason] = useState(2021);
   const [searchValue, setSearchValue] = useState('');
@@ -50,7 +53,7 @@ const LeagueLeaders = () => {
   );
 
   return (
-    <PageWrapper>
+    <ColumnPageWrapper>
       <StatSelector
         selectedStat={selectedStat}
         onSelectStat={setSelectedStat}
@@ -59,22 +62,26 @@ const LeagueLeaders = () => {
         onSelectSeason={setSelectedSeason}
         seasons={seasons}
       />
-      <Chart
-        data={selectedData}
-        highlightedData={highlightedData}
-        shouldHighlight={!isEmpty(searchValue)}
-      />
-      <Search
-        onSearch={setSearchValue}
-        searchValue={searchValue}
-        highlightedData={highlightedData}
-      />
-      <StatsTable
-        data={highlightedData}
-        columns={[selectedStat]}
-        shouldBold={false}
-      />
-    </PageWrapper>
+      <div style={{ flexGrow: 1 }}>
+        <Chart
+          data={selectedData}
+          highlightedData={highlightedData}
+          shouldHighlight={!isEmpty(searchValue)}
+        />
+      </div>
+      <div style={{ height: '250px', overflow: 'auto' }}>
+        <Search
+          onSearch={setSearchValue}
+          searchValue={searchValue}
+          highlightedData={highlightedData}
+        />
+        <StatsTable
+          data={highlightedData}
+          columns={[selectedStat]}
+          shouldBold={false}
+        />
+      </div>
+    </ColumnPageWrapper>
   )
 };
 

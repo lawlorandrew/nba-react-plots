@@ -4,7 +4,7 @@ import colors from '../../../data/colors.json';
 import PlayerSelector from './player-selector';
 import { Button } from 'react-bootstrap';
 import uniqBy from 'lodash/uniqBy';
-import { PageWrapper, TableWrapper } from '../../../shared/styled-components';
+import { GridPageWrapper, TableWrapper } from '../../../shared/styled-components';
 import Chart from './chart';
 import StatsTable from './stats-table';
 
@@ -36,14 +36,15 @@ const PlayerPlaytypeChart = () => {
   const onAddPlayer = () => setSelectedPlayerFilters([...selectedPlayerFilters, { ...blankPlayer }])
 
   return (
-    <PageWrapper>
-      <div style={{ gridRow: '1 / span 1', gridColumn: '1 / span 1'}}>
+    <GridPageWrapper>
+      <div style={{ gridRow: '1 / span 1', gridColumn: '1 / span 1' }}>
         {selectedPlayerFilters.map((spf, index) =>
           <PlayerSelector
             key={index}
             canRemove={selectedPlayerFilters.length > 1}
             playerPlaytypeData={playerPlaytypeData}
             selectedPlayerFilter={spf}
+            otherSelectedPlayers={selectedPlayerFilters.filter((_ospf, _oi) => _oi !== index)}
             setSelectedPlayerFilter={
               (val) =>
                 setSelectedPlayerFilters(selectedPlayerFilters.map((innerSpf, i) => {
@@ -63,22 +64,22 @@ const PlayerPlaytypeChart = () => {
           />)}
         <Button onClick={onAddPlayer}>Add Player</Button>
       </div>
-      <div style={{ gridRow: '1 / span 1', gridColumn: '2 / span 1'}}>
-      {selectedPlayerData &&
-        <Chart
-          selectedPlayerData={selectedPlayerData}
-          selectedPlayerFilters={selectedPlayerFilters}
-        />
-      }
+      <div style={{ gridRow: '1 / span 1', gridColumn: '2 / span 1' }}>
+        {selectedPlayerData &&
+          <Chart
+            selectedPlayerData={selectedPlayerData}
+            selectedPlayerFilters={selectedPlayerFilters}
+          />
+        }
       </div>
-      <TableWrapper style={{ gridRow: '2 / span 1', gridColumn: '1 / span 2'}}>
+      <TableWrapper style={{ gridRow: '2 / span 1', gridColumn: '1 / span 2' }}>
         <StatsTable
           data={tableData}
           columns={playtypes}
-          shouldBold={true}
+          shouldBold
         />
       </TableWrapper>
-    </PageWrapper>
+    </GridPageWrapper>
   );
 };
 

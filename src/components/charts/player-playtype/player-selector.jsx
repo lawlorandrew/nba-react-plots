@@ -15,9 +15,13 @@ const PlayerSelector = ({
   setSelectedPlayerFilter,
   onRemovePlayer,
   canRemove,
+  otherSelectedPlayers,
 }) => {
   const seasons = useMemo(
-    () => uniqBy(playerPlaytypeData, d => d.season).map(d => d.season),
+    () => uniqBy(playerPlaytypeData, d => d.season).map(d => ({
+      key: d.season,
+      label: `${d.season - 1}-${d.season % 100}`,
+    })),
     [playerPlaytypeData],
   );
   const teams = useMemo(
@@ -41,12 +45,15 @@ const PlayerSelector = ({
             .filter(
               p => p.TEAM_ID === selectedPlayerFilter.team && p.season === selectedPlayerFilter.season
             )
+            .filter(
+              p => !(otherSelectedPlayers.map(f => `${f.player}|${f.team}|${f.season}`)).includes(p.key)
+            )
             .map(d => ({ id: d.PLAYER_ID, name: d.PLAYER_NAME })),
           p => p.id,
         ),
         p => p.name,
       ),
-    [selectedPlayerFilter.team, selectedPlayerFilter.season, playerPlaytypeData],
+    [selectedPlayerFilter.team, selectedPlayerFilter.season, playerPlaytypeData, otherSelectedPlayers],
   );
   useEffect(() => {
     if (!selectedPlayerFilter.team || !teams.find(t => t.id === selectedPlayerFilter.team)) {
@@ -70,7 +77,7 @@ const PlayerSelector = ({
     <SelectionWrapper>
       <div style={{ display: 'flex', columnGap: '5px' }}>
       <Form.Control as="select" onChange={onChangeSeason} value={selectedPlayerFilter.season}>
-        {seasons.map(s => <option value={s} key={s}>{s}</option>)}
+        {seasons.map(s => <option value={s.key} key={s.key}>{s.label}</option>)}
       </Form.Control>
       <Form.Control as="select" onChange={onChangeTeam} value={selectedPlayerFilter.team}>
         {teams.map(t => <option value={t.id} key={t.id}>{t.name}</option>)}
