@@ -16,7 +16,7 @@ import PlayerPlaytypeTooltip from './player-playtype-tooltip';
 const Chart = ({ selectedPlayerData, selectedPlayerFilters }) => (
   <ResponsiveContainer>
     <ScatterChart
-      margin={{ top: 5, right: 30, left: 50, bottom: 15 }}
+      margin={{ top: 25, right: 30, left: 30, bottom: 15 }}
     >
       <CartesianGrid stroke="#f5f5f5" />
       {selectedPlayerData.map((datum, i) => <Scatter
@@ -48,8 +48,8 @@ const Chart = ({ selectedPlayerData, selectedPlayerFilters }) => (
         domain={[0, 1]}
         label={{
           value: "Efficiency",
-          position: "insideLeft",
-          offset: -50,
+          position: "top",
+          offset: 10,
         }}
       />
       <Tooltip content={<PlayerPlaytypeTooltip />} />

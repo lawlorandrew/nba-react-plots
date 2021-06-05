@@ -3,8 +3,12 @@ import Form from 'react-bootstrap/Form';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
 import { SelectionWrapper } from '../../../shared/styled-components';
-import { Button } from 'react-bootstrap';
+import styled from 'styled-components';
+import { BsFillTrashFill } from '@react-icons/all-files/bs/BsFillTrashFill';
 
+const StyledIcon = styled(BsFillTrashFill)`
+  margin-left: 5px;
+`;
 const PlayerSelector = ({
   playerPlaytypeData,
   selectedPlayerFilter,
@@ -22,7 +26,7 @@ const PlayerSelector = ({
         uniqBy(
           playerPlaytypeData
             .filter(d => d.season === selectedPlayerFilter.season)
-            .map(d => ({ id: d.TEAM_ID, name: d.TEAM_NAME })),
+            .map(d => ({ id: d.TEAM_ID, name: d.TEAM_ABBREVIATION })),
           d => d.id
         ),
         d => d.name
@@ -64,16 +68,20 @@ const PlayerSelector = ({
 
   return (
     <SelectionWrapper>
+      <div style={{ display: 'flex', columnGap: '5px' }}>
       <Form.Control as="select" onChange={onChangeSeason} value={selectedPlayerFilter.season}>
         {seasons.map(s => <option value={s} key={s}>{s}</option>)}
       </Form.Control>
       <Form.Control as="select" onChange={onChangeTeam} value={selectedPlayerFilter.team}>
         {teams.map(t => <option value={t.id} key={t.id}>{t.name}</option>)}
       </Form.Control>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
       <Form.Control as="select" onChange={onChangePlayer} value={selectedPlayerFilter.player} disabled={!selectedPlayerFilter.season || !selectedPlayerFilter.team}>
         {players.map(p => <option value={p.id} key={p.id}>{p.name}</option>)}
       </Form.Control>
-      <Button variant="danger" onClick={onRemovePlayer} disabled={!canRemove}>Remove</Button>
+      {canRemove && <StyledIcon color='#dc3545' onClick={onRemovePlayer} />}
+      </div>
     </SelectionWrapper>
   )
 };

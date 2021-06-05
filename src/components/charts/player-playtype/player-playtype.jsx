@@ -37,7 +37,7 @@ const PlayerPlaytypeChart = () => {
 
   return (
     <PageWrapper>
-      <div>
+      <div style={{ gridRow: '1 / span 1', gridColumn: '1 / span 1'}}>
         {selectedPlayerFilters.map((spf, index) =>
           <PlayerSelector
             key={index}
@@ -63,13 +63,15 @@ const PlayerPlaytypeChart = () => {
           />)}
         <Button onClick={onAddPlayer}>Add Player</Button>
       </div>
+      <div style={{ gridRow: '1 / span 1', gridColumn: '2 / span 1'}}>
       {selectedPlayerData &&
         <Chart
           selectedPlayerData={selectedPlayerData}
           selectedPlayerFilters={selectedPlayerFilters}
         />
       }
-      <TableWrapper>
+      </div>
+      <TableWrapper style={{ gridRow: '2 / span 1', gridColumn: '1 / span 2'}}>
         <StatsTable
           data={tableData}
           columns={playtypes}
